@@ -1,0 +1,47 @@
+
+
+
+oc new-project bookinfo
+
+oc apply -n bookinfo -f https://raw.githubusercontent.com/Maistra/bookinfo/maistra-1.0/bookinfo.yaml # En proyecto bookinfo
+
+oc apply -n bookinfo -f https://raw.githubusercontent.com/Maistra/bookinfo/maistra-1.0/bookinfo-gateway.yaml  # En proyecto bookinfo
+
+oc apply -n bookinfo -f https://raw.githubusercontent.com/istio/istio/release-1.1/samples/bookinfo/networking/destination-rule-all-mtls.yaml # En proyecto bookinfo
+
+oc get pods -n bookinfo
+
+Habilitar Postman
+
+# Reviews 80/20
+oc apply -n bookinfo -f https://raw.githubusercontent.com/istio/istio/release-1.1/samples/bookinfo/networking/virtual-service-reviews-80-20.yaml
+
+# Details Canary
+oc apply -n bookinfo -f  virtual-service-details-v1.yaml
+oc apply -n bookinfo -f bookinfo-details-v2.yaml
+oc apply -n bookinfo -f virtual-service-details-80-20.yaml
+oc apply -n bookinfo -f  virtual-service-details-0-100.yaml
+
+# Instalando MongoDB y Ratings-v2 / Canary Realease
+oc apply -n bookinfo -f vs-dr-ratings.yaml
+oc apply -n bookinfo -f bookinfo-db.yaml
+oc apply -n bookinfo -f bookinfo-ratings-v2.yaml
+oc apply -n bookinfo -f vs-dr-ratings-75-25.yaml
+
+
+
+
+
+
+/data/db
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+##################################################################################################################
+# Instalando MongoDB y Ratings-v2 / Canary Realease
+##################################################################################################################
+oc apply -f ~/installation/istio-1.0.5/samples/bookinfo/networking/vs-dr-eq.yaml
+oc apply -f <(istioctl kube-inject -f ~/installation/istio-1.0.5/samples/bookinfo/platform/kube/bookinfo-db.yaml)
+oc apply -f <(istioctl kube-inject -f ~/installation/istio-1.0.5/samples/bookinfo/platform/kube/bookinfo-ratings-v2.yaml)
+oc apply -f ~/installation/istio-1.0.5/samples/bookinfo/networking/vs-dr-eq-v2.yaml
+oc apply -f ~/installation/istio-1.0.5/samples/bookinfo/networking/vs-dr-eq-v3.yaml

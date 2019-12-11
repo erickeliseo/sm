@@ -1,0 +1,37 @@
+kind: DestinationRule
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: ratings
+spec:
+  host: ratings
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+  subsets:
+    - labels:
+        version: v1
+      name: v1
+    - labels:
+        version: v2
+      name: v2
+---
+kind: VirtualService
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: ratings
+spec:
+  hosts:
+    - ratings
+  gateways: ~
+  http:
+    - route:
+        - destination:
+            host: ratings
+            subset: v1
+          weight: 75
+        - destination:
+            host: ratings
+            subset: v2
+          weight: 25
+  tcp: ~
+  tls: ~
