@@ -23,7 +23,7 @@ oc get pods -n bookinfo
 export GATEWAY_URL=$(oc -n istio-system get route istio-ingressgateway -o jsonpath='{.spec.host}')  
 watch curl -o /dev/null -s -w "%{http_code}\n" http://$GATEWAY_URL/productpage  
 
-# Instalando MongoDB y Ratings-v2 / Canary Realease
+# Instalando MongoDB y Ratings-v2 / Canary Release
 oc apply -n bookinfo -f vs-dr-ratings.yaml  
 oc apply -n bookinfo -f bookinfo-db.yaml  
 oc apply -n bookinfo -f bookinfo-ratings-v2.yaml  
