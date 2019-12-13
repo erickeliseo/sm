@@ -6,7 +6,7 @@ oc adm policy add-cluster-role-to-user cluster-admin admin
 
 # Instalar todos los Operadores
 
-# Instalar el plano de control :coffee:
+# Instalar el plano de control :coffee::coffee:
 
 # Service Mesh Member Roll
 
