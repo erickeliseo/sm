@@ -37,4 +37,6 @@ oc apply -n bookinfo -f virtual-service-reviews-80-20.yaml
 oc apply -n bookinfo -f  virtual-service-details-v1.yaml  
 oc apply -n bookinfo -f bookinfo-details-v2.yaml  
 oc apply -n bookinfo -f virtual-service-details-80-20.yaml  
+
+# Jaeger UI
 oc apply -n bookinfo -f  virtual-service-details-0-100.yaml  
